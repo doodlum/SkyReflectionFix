@@ -28,8 +28,8 @@ struct Hooks
 		static RE::NiPoint3* thunk(RE::PlayerCharacter* a_player, RE::NiPoint3* a_target, int unk1, float unk2)
 		{
 			auto ret = func(a_player, a_target, unk1, unk2);
-			if (!_disableFix){
-				auto camera = RE::PlayerCamera::GetSingleton();		
+			if (!_disableFix) {
+				auto camera = RE::PlayerCamera::GetSingleton();
 				ret->x = camera->cameraRoot->world.translate.x;
 				ret->y = camera->cameraRoot->world.translate.y;
 				ret->z = camera->cameraRoot->world.translate.z;
@@ -42,7 +42,7 @@ struct Hooks
 
 	static void Install()
 	{
-		stl::write_thunk_call<TESWaterReflections__Update_Actor__GetLOSPosition>(REL::RelocationID(31373, 32160).address() + REL::Relocate(0x1AD, 0x1CA));
+		stl::write_thunk_call<TESWaterReflections__Update_Actor__GetLOSPosition>(REL::RelocationID(31373, 32160).address() + REL::Relocate(0x1AD, 0x1CA, 0x1ed));
 	}
 };
 
@@ -65,7 +65,7 @@ static void MessageHandler(SKSE::MessagingInterface::Message* message)
 bool Load()
 {
 	Hooks::Install();
-	
+
 	SKSE::GetMessagingInterface()->RegisterListener("SKSE", MessageHandler);
 
 	return true;
